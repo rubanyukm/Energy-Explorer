@@ -22,7 +22,10 @@ function layout(data) {
 
         item.x = column * cellWidth + 0.5 * cellWidth;
         item.y = row * cellHeight + 0.5 * cellHeight;
-        item.radius = radiusScale(d.renewable);
+        item.renewableRadius = radiusScale(d.renewable);
+        item.oilgascoalRadius = radiusScale(d.oilgascoal);
+        item.nuclearRadius = radiusScale(d.nuclear);
+        item.hydroelectricRadius = radiusScale(d.hydroelectric);
 
         item.labelText = getTruncatedLabel(d.name);
         item.labelOffset = maxRadius + labelHeight;
