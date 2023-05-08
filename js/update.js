@@ -1,6 +1,11 @@
-
 function initialiseGroup(g) {
-    g.classed('country', true);
+    g.classed('country', true)
+        .on('mouseover', handleMouseover)
+        .on('mouseout', handleMouseout);
+
+    g.append('circle')
+        .classed('popup-center', true)
+        .attr('r', 1);
 
     g.append('circle')
         .classed('renewable', true);
@@ -9,10 +14,10 @@ function initialiseGroup(g) {
         .classed('oilgascoal', true);
 
     g.append('circle')
-        .classed('nuclear', true);
+        .classed('hydroelectric', true);
 
     g.append('circle')
-        .classed('hydroelectric', true);
+        .classed('nuclear', true);
 
     g.append('text')
         .classed('label', true);
@@ -25,17 +30,20 @@ function updateGroup(d, i) {
 
     g.attr('transform', 'translate(' + d.x + ',' + d.y + ')');
 
+    g.select('.popup-center')
+        .attr('cy', d.popupOffset);
+
     g.select('.renewable')
         .attr('r', d.renewableRadius);
 
     g.select('.oilgascoal')
-        .attr('r', d.oilgascoalRadius);
-
-    g.select('.nuclear')
-        .attr('r', d.nuclearRadius);
+        .attr('r', d.oilGasCoalRadius);
 
     g.select('.hydroelectric')
         .attr('r', d.hydroelectricRadius);
+
+    g.select('.nuclear')
+        .attr('r', d.nuclearRadius);
 
     g.select('.label')
         .attr('y', d.labelOffset)

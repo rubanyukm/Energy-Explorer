@@ -1,4 +1,8 @@
 
+.country {
+    pointer-events: all;
+}
+
 .country .label {
     text-anchor: middle;
 }
@@ -31,4 +35,12 @@ circle.nuclear {
 
 body {
     background-color: F9FBF2;
+}
+
+.popup-center {
+	opacity: 0;
+}
+
+.flourish-popup {
+    pointer-events: none;
 }

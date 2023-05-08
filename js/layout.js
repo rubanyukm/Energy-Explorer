@@ -1,4 +1,3 @@
-
 function getTruncatedLabel(text) {
     return text.length <= 10 ? text : text.slice(0, 10) + '...';
 }
@@ -22,13 +21,23 @@ function layout(data) {
 
         item.x = column * cellWidth + 0.5 * cellWidth;
         item.y = row * cellHeight + 0.5 * cellHeight;
+
         item.renewableRadius = radiusScale(d.renewable);
-        item.oilgascoalRadius = radiusScale(d.oilgascoal);
-        item.nuclearRadius = radiusScale(d.nuclear);
+        item.oilGasCoalRadius = radiusScale(d.oilgascoal);
         item.hydroelectricRadius = radiusScale(d.hydroelectric);
+        item.nuclearRadius = radiusScale(d.nuclear);
 
         item.labelText = getTruncatedLabel(d.name);
         item.labelOffset = maxRadius + labelHeight;
+
+        item.popupOffset = -0.8 * maxRadius;
+        item.popupData = {
+            name: d.name,
+            renewable: d.renewable,
+            oilgascoal: d.oilgascoal,
+            hydroelectric: d.hydroelectric,
+            nuclear: d.nuclear
+        };
 
         return item;
     });
