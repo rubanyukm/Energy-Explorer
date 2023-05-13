@@ -41,6 +41,8 @@ function layout(data) {
     let layoutData = sortedData.map(function(d, i) {
         let item = {};
 
+        item.id = d.id;
+
         let column = i % config.numColumns;
         let row = Math.floor(i / config.numColumns);
 

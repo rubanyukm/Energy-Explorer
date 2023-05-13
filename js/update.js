@@ -1,6 +1,8 @@
 
-function initialiseGroup(g) {
+function initialiseGroup(g, d) {
     g.classed('country', true)
+        .style('opacity', 0)
+        .attr('transform', 'translate(' + d.x + ',' + d.y + ')')
         .on('mouseover', handleMouseover)
         .on('mouseout', handleMouseout);
 
@@ -27,9 +29,12 @@ function initialiseGroup(g) {
 function updateGroup(d, i) {
     let g = d3.select(this);
 
-    if(g.selectAll('*').empty()) initialiseGroup(g);
+    if(g.selectAll('*').empty()) initialiseGroup(g, d);
 
-    g.attr('transform', 'translate(' + d.x + ',' + d.y + ')')
+    g.transition()
+        .duration(config.transitionDuration)
+        .delay(config.transitionDelay * i)
+        .attr('transform', 'translate(' + d.x + ',' + d.y + ')')
         .style('opacity', d.visible ? 1 : 0) //if visible opacity is 1, if not visible opacity is 0
         .style('pointer-events', d.visible ? 'all' : 'none'); //if visible pointer events are all, if not visible pointer events are none
 
@@ -37,15 +42,27 @@ function updateGroup(d, i) {
         .attr('cy', d.popupOffset);
 
     g.select('.renewable')
+        .transition()
+        .duration(config.transitionDuration)
+        .delay(i * config.transitionDelay)    
         .attr('r', d.renewableRadius);
 
     g.select('.oilgascoal')
+        .transition()
+        .duration(config.transitionDuration)
+        .delay(i * config.transitionDelay)
         .attr('r', d.oilGasCoalRadius);
 
     g.select('.hydroelectric')
+        .transition()
+        .duration(config.transitionDuration)
+        .delay(i * config.transitionDelay)
         .attr('r', d.hydroelectricRadius);
 
     g.select('.nuclear')
+        .transition()
+        .duration(config.transitionDuration)
+        .delay(i * config.transitionDelay)
         .attr('r', d.nuclearRadius);
 
     g.select('.label')
@@ -58,7 +75,9 @@ function updateChart() {
 
     d3.select('#chart')
         .selectAll('g')
-        .data(layoutData)
+        .data(layoutData, function(d) {
+            return d.id;
+        })
         .join('g')
         .each(updateGroup);
 }
