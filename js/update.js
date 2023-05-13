@@ -50,7 +50,7 @@ function updateGroup(d, i) {
         .text(d.labelText);
 }
 
-function update() {
+function updateChart() {
     let layoutData = layout(data);
 
     d3.select('#chart')
@@ -58,4 +58,9 @@ function update() {
         .data(layoutData)
         .join('g')
         .each(updateGroup);
+}
+
+function update() {
+    updateChart();
+    updateMenu();
 }
