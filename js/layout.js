@@ -1,5 +1,28 @@
+
+function sortAcessor(d) {
+    let value = d[state.selectedIndicator];
+    if(isNaN(value)) value = 0;
+    return value;
+}
+
+function getSortedData(data) {
+    let sorted;
+    
+    if(state.selectedIndicator == 'country') {
+        sorted = _.orderBy(data, 'name');
+    } else {
+        sorted = _.orderBy(data, sortAcessor, 'desc');
+    }
+
+    return sorted;
+}
+
+function isVisible(d) {
+    return state.selectedIndicator == 'country' || d[state.selectedIndicator] > 0;
+}
+
 function getTruncatedLabel(text) {
-    return text.length <= 10 ? text : text.slice(0, 10) + '...';
+    return text.length <= 10 ? text : text.slice(0, 10) + '...'; //if the text is less than or equal to 10 characters, return the text, otherwise return the first 10 characters and add '...'
 }
 
 function layout(data) {
@@ -13,7 +36,9 @@ function layout(data) {
         .domain([0, 100])
         .range([0, maxRadius]);
 
-    let layoutData = data.map(function(d, i) {
+    let sortedData = getSortedData(data);
+
+    let layoutData = sortedData.map(function(d, i) {
         let item = {};
 
         let column = i % config.numColumns;
@@ -21,6 +46,8 @@ function layout(data) {
 
         item.x = column * cellWidth + 0.5 * cellWidth;
         item.y = row * cellHeight + 0.5 * cellHeight;
+
+        item.visible = isVisible(d);
 
         item.renewableRadius = radiusScale(d.renewable);
         item.oilGasCoalRadius = radiusScale(d.oilgascoal);

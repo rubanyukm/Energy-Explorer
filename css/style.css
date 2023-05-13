@@ -35,6 +35,7 @@ circle.nuclear {
 
 body {
     background-color: F9FBF2;
+    cursor: default;
 }
 
 .popup-center {
@@ -43,4 +44,18 @@ body {
 
 .flourish-popup {
     pointer-events: none;
+}
+
+.menu .items {
+    display: flex;
+}
+
+.menu .item {
+    padding: 0 1rem;
+    color: #333;
+    opacity: 0.5;
+}
+
+.menu .item.selected, .menu .item:hover {
+    opacity: 1;
 }

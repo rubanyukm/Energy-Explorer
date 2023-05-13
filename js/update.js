@@ -1,3 +1,4 @@
+
 function initialiseGroup(g) {
     g.classed('country', true)
         .on('mouseover', handleMouseover)
@@ -28,7 +29,9 @@ function updateGroup(d, i) {
 
     if(g.selectAll('*').empty()) initialiseGroup(g);
 
-    g.attr('transform', 'translate(' + d.x + ',' + d.y + ')');
+    g.attr('transform', 'translate(' + d.x + ',' + d.y + ')')
+        .style('opacity', d.visible ? 1 : 0) //if visible opacity is 1, if not visible opacity is 0
+        .style('pointer-events', d.visible ? 'all' : 'none'); //if visible pointer events are all, if not visible pointer events are none
 
     g.select('.popup-center')
         .attr('cy', d.popupOffset);
